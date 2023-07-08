@@ -1,0 +1,103 @@
+#version: '3'
+#
+#services:
+#  postgres:
+#    ports:
+#      - "5432:5432"
+#    image: 'postgres:10'
+#    container_name: 'java-postgres'
+#    environment:
+#      - 'POSTGRES_USER=bank_manager'
+#      - 'POSTGRES_PASSWORD=root'
+#      - 'POSTGRES_DB=bank_system'
+#    logging:
+#      options:
+#          max-size: 10m
+#          max-file: "3"
+#
+#  app:
+#    build: ./
+#    container_name: 'demo-project-app'
+#    ports:
+#      - "8080:8080"
+
+#version: '3.7'
+#
+#services:
+#  backend:
+#    build: .
+#    container_name: demo-project-app
+#    expose:
+#      - 8080
+#    ports:
+#      - 8080:8080
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bank_system
+#    depends_on:
+#      - db
+#  db:
+#    ports:
+#      - 5432:5432
+#    container_name: db
+#    image: postgres
+#    environment:
+#      - POSTGRES_DB=bank_system
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_USER=postgres
+#    volumes:
+#      - ./pgdata:/var/lib/postgresql/data
+
+#version: "3.7"
+#
+#services:
+#  backend:
+#    image: backend
+#    container_name: demo-project-app
+#    build: ./
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bank_system
+#    depends_on:
+#      - db
+#    ports:
+#      - 8084:8084
+#  db:
+#    container_name: db
+#    image: postgres
+#    environment:
+#      POSTGRES_PASSWORD: admin
+#      POSTGRES_USER: postgres
+#      POSTGRES_DB: bank_system
+#    volumes:
+#      - ./pgdata:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"
+
+
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine3.18
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test
+
+  backend:
+    image: java
+    ports:
+      - "8084:8084"
+    container_name: demo-project-app
+    build: ./
+    depends_on:
+      - db
+
+
+
+
+
+
+
